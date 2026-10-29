@@ -1,0 +1,8 @@
+<nav class="office-nav" aria-label="Office">
+  <a class="<%= currentPath === '/admin' ? 'is-current' : '' %>" href="/admin">Overview</a>
+  <a class="<%= currentPath.startsWith('/admin/internships') ? 'is-current' : '' %>" href="/admin/internships">Internships</a>
+  <a class="<%= currentPath.startsWith('/admin/organizations') ? 'is-current' : '' %>" href="/admin/organizations">Hosts</a>
+  <a class="<%= currentPath.startsWith('/admin/applications') ? 'is-current' : '' %>" href="/admin/applications">Applications</a>
+  <a class="<%= currentPath.startsWith('/admin/students') ? 'is-current' : '' %>" href="/admin/students">Students</a>
+  <a class="<%= currentPath.startsWith('/admin/messages') ? 'is-current' : '' %>" href="/admin/messages">Messages</a>
+</nav>

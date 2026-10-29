@@ -1,0 +1,29 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<main id="content">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">Correspondence</p>
+      <h1>Messages</h1>
+      <p class="lede">Letters sent from the contact page.</p>
+    </header>
+    <%- include('../partials/office-nav') %>
+    <% if (!messages.length) { %>
+      <p class="empty">No letters have arrived.</p>
+    <% } %>
+    <% messages.forEach((letter) => { %>
+      <article class="letter">
+        <header>
+          <h2><%= letter.subject %></h2>
+          <p class="meta">
+            <span><%= letter.name %></span>
+            <span><%= letter.email %></span>
+            <span><%= formatDate(letter.created_at) %></span>
+          </p>
+        </header>
+        <div class="prose"><%- paragraphs(letter.body) %></div>
+      </article>
+    <% }) %>
+  </div>
+</main>
+<%- include('../partials/footer') %>

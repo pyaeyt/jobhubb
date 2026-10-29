@@ -1,0 +1,64 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap page-gap narrow-page">
+    <header class="page-head">
+      <p class="kicker">Your details</p>
+      <h1>Profile</h1>
+      <% if (user.role === 'student') { %>
+        <p class="lede">Student number <%= user.student_id %> stays as it was entered. Ask the office if it needs correcting.</p>
+      <% } else { %>
+        <p class="lede">This is the only registrar account. Change the password here.</p>
+      <% } %>
+    </header>
+    <form class="sheet" action="/profile" method="post">
+      <%- include('partials/errors') %>
+      <input type="hidden" name="_csrf" value="<%= csrf %>">
+      <label class="field">
+        <span>Full name</span>
+        <input type="text" name="full_name" required value="<%= form.full_name || '' %>">
+      </label>
+      <label class="field">
+        <span>Email</span>
+        <input type="email" name="email" required value="<%= form.email || '' %>">
+      </label>
+      <label class="field">
+        <span>Phone</span>
+        <input type="text" name="phone" value="<%= form.phone || '' %>">
+      </label>
+      <% if (user.role === 'student') { %>
+        <div class="field-row">
+          <label class="field">
+            <span>Faculty</span>
+            <select name="faculty" required>
+              <% fields.forEach((field) => { %>
+                <option value="<%= field %>" <%= form.faculty === field ? 'selected' : '' %>><%= field %></option>
+              <% }) %>
+            </select>
+          </label>
+          <label class="field">
+            <span>Year</span>
+            <select name="year_of_study" required>
+              <% years.forEach((year) => { %>
+                <option value="<%= year %>" <%= form.year_of_study === year ? 'selected' : '' %>><%= year %></option>
+              <% }) %>
+            </select>
+          </label>
+        </div>
+      <% } %>
+      <div class="field-row">
+        <label class="field">
+          <span>New password</span>
+          <input type="password" name="password" autocomplete="new-password" minlength="6">
+        </label>
+        <label class="field">
+          <span>Confirm new password</span>
+          <input type="password" name="confirm_password" autocomplete="new-password" minlength="6">
+        </label>
+      </div>
+      <p class="form-note">Leave the password blank to keep the current one.</p>
+      <button class="btn btn-primary" type="submit">Save details</button>
+    </form>
+  </div>
+</main>
+<%- include('partials/footer') %>

@@ -1,0 +1,33 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap page-gap split">
+    <form class="sheet" action="/apply/<%= post.id %>" method="post" enctype="multipart/form-data">
+      <p class="kicker">Application</p>
+      <h1>Apply</h1>
+      <%- include('partials/errors') %>
+      <input type="hidden" name="_csrf" value="<%= csrf %>">
+      <label class="field">
+        <span>Letter</span>
+        <textarea name="cover_letter" rows="10" required><%= form.cover_letter || '' %></textarea>
+      </label>
+      <label class="field">
+        <span>Résumé</span>
+        <input type="file" name="resume" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+      </label>
+      <p class="form-note">PDF or Word, up to 5 MB. You may apply to this posting only once.</p>
+      <button class="btn btn-primary" type="submit">Submit the application</button>
+    </form>
+    <aside class="facts">
+      <p class="kicker"><%= post.field %></p>
+      <h2><%= post.title %></h2>
+      <div><dt>Host</dt><dd><%= post.organization_name %></dd></div>
+      <div><dt>Where</dt><dd><%= post.location %></dd></div>
+      <div><dt>Length</dt><dd><%= post.duration_weeks %> weeks</dd></div>
+      <div><dt>Stipend</dt><dd><%= formatStipend(post.paid, post.stipend) %></dd></div>
+      <div><dt>Apply by</dt><dd><%= formatDate(post.deadline) %></dd></div>
+      <p class="facts-note"><a href="/internships/<%= post.id %>">Read the full posting</a></p>
+    </aside>
+  </div>
+</main>
+<%- include('partials/footer') %>

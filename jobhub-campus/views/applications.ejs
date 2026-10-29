@@ -1,0 +1,40 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">Your file</p>
+      <h1>Applications</h1>
+      <p class="lede">Submitted means the office has the file. Under review means it is being read. Offered and declined are the registrar’s decision.</p>
+    </header>
+    <% if (!applications.length) { %>
+      <p class="empty">You have not applied yet. <a href="/internships">Read the board</a>.</p>
+    <% } else { %>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Internship</th>
+              <th>Host</th>
+              <th>Applied</th>
+              <th>Decision</th>
+              <th>Résumé</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% applications.forEach((item) => { %>
+              <tr>
+                <td><a href="/internships/<%= item.internship_id %>"><%= item.internship_title %></a></td>
+                <td><%= item.organization_name %></td>
+                <td><%= formatDate(item.applied_at) %></td>
+                <td><span class="status status-<%= item.status %>"><%= statusLabel(item.status) %></span></td>
+                <td><a href="/resumes/<%= item.id %>">Download</a></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</main>
+<%- include('partials/footer') %>

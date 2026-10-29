@@ -1,0 +1,19 @@
+<article class="listing">
+  <div class="mono" aria-hidden="true"><%= post.organization_name.charAt(0) %></div>
+  <div class="listing-main">
+    <p class="kicker"><%= post.field %></p>
+    <h3><a href="/internships/<%= post.id %>"><%= post.title %></a></h3>
+    <p class="org"><%= post.organization_name %></p>
+    <p class="meta">
+      <span><%= post.location %></span>
+      <span><%= post.mode %></span>
+      <span><%= post.duration_weeks %> weeks</span>
+      <span><%= formatStipend(post.paid, post.stipend) %></span>
+    </p>
+  </div>
+  <div class="listing-side">
+    <p><%= post.openings %> <%= post.openings === 1 ? 'place' : 'places' %></p>
+    <p>Apply by <%= formatDate(post.deadline) %></p>
+    <a class="text-link" href="/internships/<%= post.id %>">View posting</a>
+  </div>
+</article>

@@ -1,0 +1,46 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap page-gap">
+    <header class="page-head">
+      <p class="kicker">Correspondence</p>
+      <h1>Write to the office</h1>
+      <p class="lede">Students, tutors, and hosts may write here. The registrar reads the letter from the office desk.</p>
+    </header>
+    <div class="split">
+      <form class="sheet" action="/contact" method="post">
+        <%- include('partials/errors') %>
+        <input type="hidden" name="_csrf" value="<%= csrf %>">
+        <div class="hp" aria-hidden="true">
+          <label>Leave this blank <input type="text" name="website_confirm" tabindex="-1" autocomplete="off"></label>
+        </div>
+        <label class="field">
+          <span>Name</span>
+          <input type="text" name="name" required value="<%= form.name || '' %>">
+        </label>
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" required value="<%= form.email || '' %>">
+        </label>
+        <label class="field">
+          <span>Subject</span>
+          <input type="text" name="subject" required value="<%= form.subject || '' %>">
+        </label>
+        <label class="field">
+          <span>Message</span>
+          <textarea name="message" rows="7" required><%= form.message || '' %></textarea>
+        </label>
+        <button class="btn btn-primary" type="submit">Send the letter</button>
+      </form>
+      <aside class="facts">
+        <p class="kicker">Office hours</p>
+        <h2>When to call</h2>
+        <div><dt>Days</dt><dd>Monday–Friday</dd></div>
+        <div><dt>Morning</dt><dd>9:00–12:00</dd></div>
+        <div><dt>Afternoon</dt><dd>2:00–4:30</dd></div>
+        <p class="facts-note">A host that wishes to offer a place should include the field, the length in weeks, and whether a stipend is paid.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+<%- include('partials/footer') %>

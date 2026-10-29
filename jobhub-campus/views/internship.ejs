@@ -1,0 +1,42 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap split page-gap">
+    <article class="prose">
+      <p class="kicker"><%= post.field %></p>
+      <h1><%= post.title %></h1>
+      <p class="org"><a href="/organizations/<%= post.organization_id %>"><%= post.organization_name %></a></p>
+      <%- paragraphs(post.description) %>
+      <h2>What you will need</h2>
+      <%- paragraphs(post.requirements) %>
+    </article>
+    <aside class="facts">
+      <p class="kicker">The post</p>
+      <h2><%= post.organization_name %></h2>
+      <div><dt>Where</dt><dd><%= post.location %></dd></div>
+      <div><dt>Manner</dt><dd><%= post.mode %></dd></div>
+      <div><dt>Length</dt><dd><%= post.duration_weeks %> weeks</dd></div>
+      <div><dt>Stipend</dt><dd><%= formatStipend(post.paid, post.stipend) %></dd></div>
+      <div><dt>Places</dt><dd><%= post.openings %></dd></div>
+      <div><dt>Apply by</dt><dd><%= formatDate(post.deadline) %></dd></div>
+      <div class="facts-action">
+        <% if (mine) { %>
+          <p>Your application is <strong class="status status-<%= mine.status %>"><%= statusLabel(mine.status) %></strong>.</p>
+          <a class="text-link" href="/applications">See your applications</a>
+        <% } else if (post.status !== 'open') { %>
+          <p>This posting is closed.</p>
+        <% } else if (deadlinePassed(post.deadline)) { %>
+          <p>The deadline has passed.</p>
+        <% } else if (!user) { %>
+          <a class="btn btn-primary" href="/apply/<%= post.id %>">Sign in to apply</a>
+        <% } else if (user.role === 'admin') { %>
+          <p>Students apply with their own accounts.</p>
+          <a class="text-link" href="/admin/internships/<%= post.id %>/edit">Edit this posting</a>
+        <% } else { %>
+          <a class="btn btn-primary" href="/apply/<%= post.id %>">Apply for this place</a>
+        <% } %>
+      </div>
+    </aside>
+  </div>
+</main>
+<%- include('partials/footer') %>

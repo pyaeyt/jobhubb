@@ -1,0 +1,71 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<main id="content">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">Registrar</p>
+      <h1>The office</h1>
+      <p class="lede">One desk for the term’s internships, hosts, students, and decisions.</p>
+    </header>
+    <%- include('../partials/office-nav') %>
+    <% if (defaultPassword) { %>
+      <div class="flash flash-note">The registrar password is still the sample one. Change it from Profile before real use.</div>
+    <% } %>
+    <div class="tiles">
+      <article class="tile">
+        <p class="kicker">Open</p>
+        <strong><%= stats.openInternships %></strong>
+        <span>Internships</span>
+      </article>
+      <article class="tile">
+        <p class="kicker">Waiting</p>
+        <strong><%= stats.awaiting %></strong>
+        <span>Applications to read</span>
+      </article>
+      <article class="tile">
+        <p class="kicker">Register</p>
+        <strong><%= stats.students %></strong>
+        <span>Students</span>
+      </article>
+      <article class="tile">
+        <p class="kicker">Directory</p>
+        <strong><%= stats.hosts %></strong>
+        <span>Hosts</span>
+      </article>
+    </div>
+    <div class="section-head">
+      <div>
+        <p class="kicker">Latest</p>
+        <h2>Applications</h2>
+      </div>
+      <a class="text-link" href="/admin/applications">All applications</a>
+    </div>
+    <% if (!stats.recent.length) { %>
+      <p class="empty">No student has applied yet.</p>
+    <% } else { %>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Internship</th>
+              <th>Applied</th>
+              <th>Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% stats.recent.forEach((item) => { %>
+              <tr>
+                <td><a href="/admin/applications/<%= item.id %>"><%= item.full_name %></a></td>
+                <td><%= item.internship_title %></td>
+                <td><%= formatDate(item.applied_at) %></td>
+                <td><span class="status status-<%= item.status %>"><%= statusLabel(item.status) %></span></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</main>
+<%- include('../partials/footer') %>

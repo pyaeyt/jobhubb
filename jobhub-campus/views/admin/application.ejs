@@ -1,0 +1,38 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<main id="content">
+  <div class="wrap page-gap split">
+    <article class="prose">
+      <p class="kicker">Letter</p>
+      <h1><%= application.full_name %></h1>
+      <p class="org"><%= application.internship_title %> · <%= application.organization_name %></p>
+      <%- paragraphs(application.cover_letter) %>
+    </article>
+    <aside class="facts">
+      <p class="kicker">The file</p>
+      <h2><%= statusLabel(application.status) %></h2>
+      <div><dt>Email</dt><dd><%= application.email %></dd></div>
+      <div><dt>Number</dt><dd><%= application.student_id %></dd></div>
+      <div><dt>Faculty</dt><dd><%= application.faculty %></dd></div>
+      <div><dt>Year</dt><dd><%= application.year_of_study %></dd></div>
+      <div><dt>Applied</dt><dd><%= formatDate(application.applied_at) %></dd></div>
+      <% if (application.phone) { %>
+        <div><dt>Phone</dt><dd><%= application.phone %></dd></div>
+      <% } %>
+      <p class="facts-note"><a href="/resumes/<%= application.id %>">Download the résumé</a></p>
+      <form class="decision" method="post" action="/admin/applications/<%= application.id %>">
+        <input type="hidden" name="_csrf" value="<%= csrf %>">
+        <label class="field">
+          <span>Decision</span>
+          <select name="status">
+            <% applicationStatuses.forEach((item) => { %>
+              <option value="<%= item.value %>" <%= application.status === item.value ? 'selected' : '' %>><%= item.label %></option>
+            <% }) %>
+          </select>
+        </label>
+        <button class="btn btn-primary" type="submit">Save decision</button>
+      </form>
+    </aside>
+  </div>
+</main>
+<%- include('../partials/footer') %>

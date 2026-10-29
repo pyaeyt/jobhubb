@@ -1,0 +1,32 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap page-gap narrow-page">
+    <header class="page-head">
+      <p class="kicker">The register</p>
+      <h1>Sign in</h1>
+      <p class="lede">Students and the registrar use the same door. The office opens only for the registrar.</p>
+    </header>
+    <form class="sheet" action="/login" method="post">
+      <%- include('partials/errors') %>
+      <input type="hidden" name="_csrf" value="<%= csrf %>">
+      <label class="field">
+        <span>Email</span>
+        <input type="email" name="email" required autocomplete="username" value="<%= form.email || '' %>">
+      </label>
+      <label class="field">
+        <span>Password</span>
+        <input type="password" name="password" required autocomplete="current-password">
+      </label>
+      <button class="btn btn-primary" type="submit">Sign in</button>
+      <p class="form-note">No account yet? <a href="/register">Register as a student</a>.</p>
+    </form>
+    <aside class="sample">
+      <p class="kicker">Sample accounts for this copy</p>
+      <p><strong>Registrar</strong> admin@jobhub.example · admin123</p>
+      <p><strong>Student</strong> elena.voss@student.example · student123</p>
+      <p>Change the registrar password from Profile before any real use.</p>
+    </aside>
+  </div>
+</main>
+<%- include('partials/footer') %>

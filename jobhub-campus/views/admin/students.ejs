@@ -1,0 +1,51 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<main id="content">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">Register</p>
+      <h1>Students</h1>
+      <p class="lede">Removing a student also removes that student’s applications. The registrar account cannot be removed here.</p>
+    </header>
+    <%- include('../partials/office-nav') %>
+    <% if (!students.length) { %>
+      <p class="empty">No students have registered.</p>
+    <% } else { %>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Student number</th>
+              <th>Faculty</th>
+              <th>Year</th>
+              <th>Joined</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% students.forEach((student) => { %>
+              <tr>
+                <td>
+                  <%= student.full_name %>
+                  <span class="quiet"><%= student.email %></span>
+                </td>
+                <td><%= student.student_id %></td>
+                <td><%= student.faculty %></td>
+                <td><%= student.year_of_study %></td>
+                <td><%= formatDate(student.created_at) %></td>
+                <td>
+                  <form method="post" action="/admin/students/<%= student.id %>/delete" data-confirm="Remove this student and their applications?">
+                    <input type="hidden" name="_csrf" value="<%= csrf %>">
+                    <button class="btn btn-small btn-danger" type="submit">Remove</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</main>
+<%- include('../partials/footer') %>

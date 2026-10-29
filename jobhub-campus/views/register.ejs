@@ -1,0 +1,62 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap page-gap narrow-page">
+    <header class="page-head">
+      <p class="kicker">Students only</p>
+      <h1>Create an account</h1>
+      <p class="lede">Use the name and student number the university already holds. This form cannot create a second registrar.</p>
+    </header>
+    <form class="sheet" action="/register" method="post">
+      <%- include('partials/errors') %>
+      <input type="hidden" name="_csrf" value="<%= csrf %>">
+      <label class="field">
+        <span>Full name</span>
+        <input type="text" name="full_name" required autocomplete="name" value="<%= form.full_name || '' %>">
+      </label>
+      <div class="field-row">
+        <label class="field">
+          <span>Email</span>
+          <input type="email" name="email" required autocomplete="email" value="<%= form.email || '' %>">
+        </label>
+        <label class="field">
+          <span>Student number</span>
+          <input type="text" name="student_id" required value="<%= form.student_id || '' %>" placeholder="STU-24018">
+        </label>
+      </div>
+      <div class="field-row">
+        <label class="field">
+          <span>Faculty</span>
+          <select name="faculty" required>
+            <option value="">Choose</option>
+            <% fields.forEach((field) => { %>
+              <option value="<%= field %>" <%= form.faculty === field ? 'selected' : '' %>><%= field %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label class="field">
+          <span>Year</span>
+          <select name="year_of_study" required>
+            <option value="">Choose</option>
+            <% years.forEach((year) => { %>
+              <option value="<%= year %>" <%= form.year_of_study === year ? 'selected' : '' %>><%= year %></option>
+            <% }) %>
+          </select>
+        </label>
+      </div>
+      <div class="field-row">
+        <label class="field">
+          <span>Password</span>
+          <input type="password" name="password" required autocomplete="new-password" minlength="6">
+        </label>
+        <label class="field">
+          <span>Confirm password</span>
+          <input type="password" name="confirm_password" required autocomplete="new-password" minlength="6">
+        </label>
+      </div>
+      <button class="btn btn-primary" type="submit">Create the account</button>
+      <p class="form-note">Already enrolled here? <a href="/login">Sign in</a>.</p>
+    </form>
+  </div>
+</main>
+<%- include('partials/footer') %>

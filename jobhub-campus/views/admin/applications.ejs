@@ -1,0 +1,58 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<main id="content">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">Decisions</p>
+      <h1>Applications</h1>
+    </header>
+    <%- include('../partials/office-nav') %>
+    <form class="filters filters-short" action="/admin/applications" method="get">
+      <label>
+        <span>Decision</span>
+        <select name="status">
+          <option value="">All</option>
+          <% applicationStatuses.forEach((item) => { %>
+            <option value="<%= item.value %>" <%= status === item.value ? 'selected' : '' %>><%= item.label %></option>
+          <% }) %>
+        </select>
+      </label>
+      <button class="btn btn-primary" type="submit">Show</button>
+    </form>
+    <% if (!applications.length) { %>
+      <p class="empty">No applications in this set.</p>
+    <% } else { %>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Internship</th>
+              <th>Faculty</th>
+              <th>Applied</th>
+              <th>Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% applications.forEach((item) => { %>
+              <tr>
+                <td>
+                  <a href="/admin/applications/<%= item.id %>"><%= item.full_name %></a>
+                  <span class="quiet"><%= item.student_id %></span>
+                </td>
+                <td>
+                  <%= item.internship_title %>
+                  <span class="quiet"><%= item.organization_name %></span>
+                </td>
+                <td><%= item.faculty %></td>
+                <td><%= formatDate(item.applied_at) %></td>
+                <td><span class="status status-<%= item.status %>"><%= statusLabel(item.status) %></span></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</main>
+<%- include('../partials/footer') %>

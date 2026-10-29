@@ -1,0 +1,34 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">Directory</p>
+      <h1>Host organizations</h1>
+      <p class="lede">These offices and studios take students. They do not post for themselves. The registrar lists every place.</p>
+    </header>
+    <% if (!hosts.length) { %>
+      <p class="empty">The directory is empty.</p>
+    <% } %>
+    <div class="board">
+    <% hosts.forEach((host) => { %>
+      <article class="listing">
+        <div class="mono" aria-hidden="true"><%= host.name.charAt(0) %></div>
+        <div class="listing-main">
+          <p class="kicker"><%= host.industry %></p>
+          <h3><a href="/organizations/<%= host.id %>"><%= host.name %></a></h3>
+          <p><%= host.description %></p>
+          <p class="meta">
+            <span><%= host.location %></span>
+            <span><%= host.open_count %> open</span>
+          </p>
+        </div>
+        <div class="listing-side">
+          <a class="text-link" href="/organizations/<%= host.id %>">View host</a>
+        </div>
+      </article>
+    <% }) %>
+    </div>
+  </div>
+</main>
+<%- include('partials/footer') %>

@@ -1,0 +1,46 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">The board</p>
+      <h1>Internships</h1>
+      <p class="lede">Open places for enrolled students. The list is ordered by deadline.</p>
+    </header>
+    <form class="filters" action="/internships" method="get">
+      <label>
+        <span>Keyword</span>
+        <input type="text" name="q" value="<%= filters.q %>" placeholder="Title, host, or place">
+      </label>
+      <label>
+        <span>Field</span>
+        <select name="field">
+          <option value="">All fields</option>
+          <% fields.forEach((field) => { %>
+            <option value="<%= field %>" <%= filters.field === field ? 'selected' : '' %>><%= field %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label>
+        <span>Place</span>
+        <select name="mode">
+          <option value="">Any</option>
+          <% modes.forEach((mode) => { %>
+            <option value="<%= mode %>" <%= filters.mode === mode ? 'selected' : '' %>><%= mode %></option>
+          <% }) %>
+        </select>
+      </label>
+      <button class="btn btn-primary" type="submit">Filter</button>
+    </form>
+    <p class="count"><%= posts.length %> <%= posts.length === 1 ? 'internship' : 'internships' %></p>
+    <% if (!posts.length) { %>
+      <p class="empty">Nothing on the board matches this search. Try another field, or write to the office.</p>
+    <% } %>
+    <div class="board">
+      <% posts.forEach((post) => { %>
+        <%- include('partials/listing', { post }) %>
+      <% }) %>
+    </div>
+  </div>
+</main>
+<%- include('partials/footer') %>

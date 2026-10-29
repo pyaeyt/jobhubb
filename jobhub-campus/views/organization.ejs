@@ -1,0 +1,37 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <div class="wrap page-gap">
+    <header class="page-head">
+      <p class="kicker"><%= host.industry %></p>
+      <h1><%= host.name %></h1>
+      <p class="lede"><%= host.location %></p>
+    </header>
+    <div class="prose narrow">
+      <%- paragraphs(host.description) %>
+      <p class="meta">
+        <% if (host.website) { %>
+          <span><a href="<%= host.website %>" target="_blank" rel="noopener noreferrer"><%= host.website.replace(/^https?:\/\//, '') %></a></span>
+        <% } %>
+        <% if (host.contact_email) { %>
+          <span><a href="mailto:<%= host.contact_email %>"><%= host.contact_email %></a></span>
+        <% } %>
+      </p>
+    </div>
+    <div class="section-head">
+      <div>
+        <p class="kicker">Open places</p>
+        <h2>Internships</h2>
+      </div>
+    </div>
+    <% if (!posts.length) { %>
+      <p class="empty">This host has no open internship at the moment.</p>
+    <% } %>
+    <div class="board">
+      <% posts.forEach((post) => { %>
+        <%- include('partials/listing', { post }) %>
+      <% }) %>
+    </div>
+  </div>
+</main>
+<%- include('partials/footer') %>

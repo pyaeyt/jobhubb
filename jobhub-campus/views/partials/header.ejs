@@ -1,0 +1,42 @@
+<header class="mast">
+  <div class="wrap mast-inner">
+    <a class="brand" href="/">
+      <span class="crest" aria-hidden="true">IH</span>
+      <span class="brand-text">
+        <strong>InternHub</strong>
+        <em>Student internships</em>
+      </span>
+    </a>
+    <input class="nav-check" type="checkbox" id="nav-check">
+    <label class="nav-toggle" for="nav-check">Menu</label>
+    <nav class="nav" id="site-nav" aria-label="Primary">
+      <a class="<%= currentPath === '/' ? 'is-current' : '' %>" href="/">Home</a>
+      <a class="<%= currentPath.startsWith('/internships') ? 'is-current' : '' %>" href="/internships">Internships</a>
+      <a class="<%= currentPath.startsWith('/organizations') ? 'is-current' : '' %>" href="/organizations">Hosts</a>
+      <a class="<%= currentPath === '/about' ? 'is-current' : '' %>" href="/about">About</a>
+      <a class="<%= currentPath === '/contact' ? 'is-current' : '' %>" href="/contact">Contact</a>
+      <span class="nav-gap"></span>
+      <% if (user) { %>
+        <span class="nav-name"><%= user.full_name %></span>
+        <% if (user.role === 'admin') { %>
+          <a class="<%= currentPath.startsWith('/admin') ? 'is-current' : '' %>" href="/admin">Office</a>
+        <% } else { %>
+          <a class="<%= currentPath === '/applications' ? 'is-current' : '' %>" href="/applications">My applications</a>
+        <% } %>
+        <a class="<%= currentPath === '/profile' ? 'is-current' : '' %>" href="/profile">Profile</a>
+        <form action="/logout" method="post">
+          <input type="hidden" name="_csrf" value="<%= csrf %>">
+          <button class="linkish" type="submit">Sign out</button>
+        </form>
+      <% } else { %>
+        <a class="<%= currentPath === '/login' ? 'is-current' : '' %>" href="/login">Sign in</a>
+        <a class="btn btn-small" href="/register">Register</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+<% if (flash) { %>
+  <div class="wrap">
+    <div class="flash flash-<%= flash.type %>" role="<%= flash.type === 'ok' ? 'status' : 'alert' %>"><%= flash.text %></div>
+  </div>
+<% } %>

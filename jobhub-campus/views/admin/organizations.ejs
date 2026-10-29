@@ -1,0 +1,51 @@
+<%- include('../partials/head') %>
+<%- include('../partials/header') %>
+<main id="content">
+  <div class="wrap">
+    <header class="page-head page-head-row">
+      <div>
+        <p class="kicker">Directory</p>
+        <h1>Hosts</h1>
+      </div>
+      <a class="btn btn-primary" href="/admin/organizations/new">Add a host</a>
+    </header>
+    <%- include('../partials/office-nav') %>
+    <% if (!hosts.length) { %>
+      <p class="empty">No hosts yet.</p>
+    <% } else { %>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Host</th>
+              <th>Field</th>
+              <th>Place</th>
+              <th>Open</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% hosts.forEach((host) => { %>
+              <tr>
+                <td><a href="/organizations/<%= host.id %>"><%= host.name %></a></td>
+                <td><%= host.industry %></td>
+                <td><%= host.location %></td>
+                <td><%= host.open_count %></td>
+                <td>
+                  <div class="row-actions">
+                    <a class="text-link" href="/admin/organizations/<%= host.id %>/edit">Edit</a>
+                    <form method="post" action="/admin/organizations/<%= host.id %>/delete" data-confirm="Remove this host from the directory?">
+                      <input type="hidden" name="_csrf" value="<%= csrf %>">
+                      <button class="btn btn-small btn-danger" type="submit">Remove</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</main>
+<%- include('../partials/footer') %>

@@ -1,0 +1,126 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main id="content">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-panel">
+      <div>
+        <p class="kicker">For enrolled students</p>
+        <h1>Find an internship with InternHub.</h1>
+        <p class="lede">One board, kept by the career registrar. Read the postings, apply once with a letter and a résumé, and follow the decision here.</p>
+        <form class="search" action="/internships" method="get">
+          <label class="sr" for="q">Keyword</label>
+          <input id="q" type="text" name="q" placeholder="Title, host, or place">
+          <label class="sr" for="field">Field</label>
+          <select id="field" name="field">
+            <option value="">All fields</option>
+            <% fields.forEach((field) => { %>
+              <option value="<%= field %>"><%= field %></option>
+            <% }) %>
+          </select>
+          <button class="btn btn-primary" type="submit">Search the board</button>
+        </form>
+      </div>
+      <aside class="notice">
+        <p class="kicker">This term</p>
+        <h2>The register</h2>
+        <div class="notice-stat">
+          <span>Open postings</span>
+          <strong><%= stats.open %></strong>
+        </div>
+        <div class="notice-stat">
+          <span>Host organizations</span>
+          <strong><%= stats.hosts %></strong>
+        </div>
+        <div class="notice-stat">
+          <span>Fields of study</span>
+          <strong><%= stats.fields %></strong>
+        </div>
+      </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">The board</p>
+          <h2>Closing soon</h2>
+        </div>
+        <a class="text-link" href="/internships">All internships</a>
+      </div>
+      <% if (!posts.length) { %>
+        <p class="empty">The board is clear. New internships are posted by the registrar.</p>
+      <% } else { %>
+        <div class="board">
+          <% posts.forEach((post) => { %>
+            <%- include('partials/listing', { post }) %>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">How a place is filled</p>
+          <h2>Three steps</h2>
+        </div>
+      </div>
+      <ol class="steps">
+        <li>
+          <span>01</span>
+          <h3>Enrol</h3>
+          <p>Create a student account with your university email and student number. There is no employer login.</p>
+        </li>
+        <li>
+          <span>02</span>
+          <h3>Read</h3>
+          <p>Filter the board by field, place, and whether the post is paid. Each posting names its host and its deadline.</p>
+        </li>
+        <li>
+          <span>03</span>
+          <h3>Apply once</h3>
+          <p>Send a letter and a résumé. The registrar marks the file submitted, under review, offered, or declined.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap band-inner">
+      <div>
+        <p class="kicker kicker-light">A note to hosts</p>
+        <h2>Organizations do not keep an account.</h2>
+        <p>If a studio or office wishes to take a student, they write to the registrar. The office posts the internship and reads every application.</p>
+      </div>
+      <a class="btn btn-light" href="/contact">Write to the office</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <p class="kicker">Directory</p>
+          <h2>Hosts this term</h2>
+        </div>
+        <a class="text-link" href="/organizations">Full directory</a>
+      </div>
+      <ul class="host-index">
+        <% hosts.forEach((host) => { %>
+          <li>
+            <a href="/organizations/<%= host.id %>">
+              <span><%= host.name %></span>
+              <em><%= host.open_count %> open</em>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  </section>
+</main>
+<%- include('partials/footer') %>
